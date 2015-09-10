@@ -44,14 +44,35 @@ public class LC_153_FindMinOfRoatedArray {
         }
     }
 
+    /*
     public int findMin(int[] nums) {
         return doFind(nums, 0, nums.length-1);
+    }
+    */
+
+    public int findMin(int[] nums) {
+        int res = -1;
+        int low = 0, high = nums.length-1;
+        int mid = -1;
+        while(low <= high) {
+            if(nums[low] <= nums[high]) return nums[low];
+            mid = (low+high)>>>1;
+            if(mid-1 >= 0 && mid+1 < nums.length
+            && nums[mid] < nums[mid-1] && nums[mid] < nums[mid+1]) return nums[mid];
+            if(nums[mid] < nums[high]) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return res;
     }
 
     public static void main(String[] args) {
         LC_153_FindMinOfRoatedArray inst = new LC_153_FindMinOfRoatedArray();
 
-        int N = 8;
+        int N = 7;
         for(int i=0;i<N;++i) {
             //int[] nums = new int[]{3, 4, 5, 6, 7, 0, 1, 2};
             int[] nums = new int[N];

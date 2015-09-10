@@ -1,5 +1,6 @@
 package backtracking;
 
+import java.util.*;
 /**
  *
  * Write a program to solve a Sudoku puzzle by filling the empty cells.
@@ -17,6 +18,7 @@ package backtracking;
  */
 public class LC_37_Sudoku {
 
+    /*
     void solveSudoku(char[][] board) {
         doSolve(board, 0);
     }
@@ -38,6 +40,7 @@ public class LC_37_Sudoku {
         }
     }
 
+    */
     boolean isInRow(char[][] board, int i, char c) {
         for (int k = 0; k < 9; k++) {
             if (board[i][k] == c) return true;
@@ -59,6 +62,43 @@ public class LC_37_Sudoku {
                 if (board[m][n] == c) return true;
         return false;
     }
+
+    class Cell {
+        int x;
+        int y;
+        public Cell(int x, int y) {this.x = x; this.y = y;}
+    }
+
+
+    private boolean backtracking(char[][] board, List<Cell>emptyList) {
+        if(emptyList.isEmpty()) return true;
+        Cell c = emptyList.get(0);
+        emptyList.remove(0);
+        for(char i='1'; i<='9'; ++i) {
+            if(isInRow(board, c.x, i) || isInCol(board, c.y, i) || isInBox(board, c.x, c.y, i)) continue;
+            board[c.x][c.y] = i;
+            if(backtracking(board, emptyList)) return true;
+            board[c.x][c.y] = '.';
+        }
+        emptyList.add(0, c);
+        return false;
+    }
+
+    public void solveSudoku(char[][] board) {
+        if(board == null) return;
+        if(board.length !=9 && board[0].length != 9) return;
+        List<Cell> emptyList = new ArrayList<Cell>();
+        for(int i=0; i<9; ++i) {
+            for(int j=0; j<9; ++j) {
+                if(board[i][j] == '.') {
+                    Cell c = new Cell(i, j);
+                    emptyList.add(c);
+                }
+            }
+        }
+        backtracking(board, emptyList);
+    }
+
 
     public static void main(String[] args) {
         String[] boardStr = new String[]{

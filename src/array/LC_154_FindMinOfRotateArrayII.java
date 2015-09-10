@@ -28,10 +28,27 @@ public class LC_154_FindMinOfRotateArrayII {
         }
     }
 
-
+/*
     public int findMin(int[] nums) {
         return doFind(nums, 0, nums.length-1);
     }
+  */
+    public int findMin(int[] nums) {
+        int res  = Integer.MAX_VALUE;
+        int l = 0, h = nums.length-1;
+        int m = -1;
+        while(l<=h) {
+            m = (l+h)>>>1;
+            if(nums[m] <= nums[h]) {
+                res = Math.min(res, nums[m]);
+                h = m-1;
+            } else {
+                l = m+1;
+            }
+        }
+        return res;
+    }
+
 
     public static void main(String[] args) {
         LC_154_FindMinOfRotateArrayII inst = new LC_154_FindMinOfRotateArrayII();

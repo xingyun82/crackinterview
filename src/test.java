@@ -2,9 +2,32 @@ import java.util.*;
 /**
  * Created by xingyun on 15/8/18.
  */
-public class test {
+
+class test2 {
+    int x;
+    int y;
+}
+
+class test {
+
+    class subclass {
+        int x;
+        int y;
+    }
+
+    public boolean equals(Object o) {
+        return false;
+    }
+
+    public int hashCode() {
+        return 1;
+
+    }
 
     public static void main(String[] args) {
+        test inst = new test();
+        subclass inst2 = inst.new subclass();
+
 
         String str = new String();
         str.isEmpty();

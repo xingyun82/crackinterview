@@ -1,5 +1,6 @@
 package backtracking;
 
+import common.Utility;
 import java.util.*;
 /**
  *
@@ -21,6 +22,7 @@ import java.util.*;
  */
 public class LC_40_CombinationSumII {
 
+    /*
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         List<Integer> canList = new ArrayList<Integer>();
@@ -49,6 +51,42 @@ public class LC_40_CombinationSumII {
                 path.remove(path.size() - 1);
             }
         }
+    }
+    */
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        Arrays.sort(candidates);
+        doCombinationSum(res, candidates, new ArrayList<Integer>(), -1, target);
+        return res;
+    }
+
+    public void doCombinationSum(List<List<Integer>> res, int[] candidates, List<Integer> path, int last, int target) {
+        if (target == 0) {
+            if (path.size() > 0) {
+                List<Integer> tmpPath = new ArrayList<Integer>();
+                tmpPath.addAll(path);
+                res.add(tmpPath);
+            }
+        }
+        for (int i=last+1; i<candidates.length; ++i) {
+            // ignore duplicated candidates
+            if(i>last+1 && candidates[i] == candidates[i-1]) continue;
+
+            if(target >= candidates[i]) {
+                path.add(candidates[i]);
+                doCombinationSum(res, candidates, path, i, target - candidates[i]);
+                path.remove(path.size() - 1);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        LC_40_CombinationSumII inst = new LC_40_CombinationSumII();
+        int[] num = new int[]{10,1,2,6,7,1,5};
+        List<List<Integer>> res = inst.combinationSum2(num, 8);
+        Utility<Integer> u = new Utility<Integer>();
+        u.printListCollection(res);
     }
 
 }

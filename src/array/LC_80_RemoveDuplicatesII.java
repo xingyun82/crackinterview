@@ -2,40 +2,52 @@ package array;
 
 /**
  *
- * Follow up for "Search in Rotated Sorted Array":
- What if duplicates are allowed?
+ Follow up for "Remove Duplicates":
+ What if duplicates are allowed at most twice?
 
- Would this affect the run-time complexity? How and why?
+ For example,
+ Given sorted array nums = [1,1,1,2,2,3],
 
- Write a function to determine if a given target is in the array.
+ Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. It doesn't matter what you leave beyond the new length.
+
  * Created by xingyun on 15/8/19.
  */
 public class LC_80_RemoveDuplicatesII {
 
-    private boolean divideAndConq(int[] nums, int low, int high, int target) {
-        if(low > high) return false;
-        int mid = (low+high)>>>1;
-        if(nums[mid] == target) return true;
-        if(nums[low] < nums[mid]) {
-            if(target >= nums[low] && target < nums[mid]) {
-                return divideAndConq(nums, low, mid-1, target);
-            } else {
-                return divideAndConq(nums, mid+1, high, target);
-            }
-        } else if(nums[low] == nums[mid]) {
-            return divideAndConq(nums, low, mid-1, target) ||
-                    divideAndConq(nums, mid+1, high, target);
-        } else {
-            if(target> nums[mid] && target <= nums[high]) {
-                return divideAndConq(nums, mid+1, high, target);
-            } else {
-                return divideAndConq(nums, low, mid-1, target);
+    /*
+    public int removeDuplicates(int[] nums, int k) {
+        if(nums == null || nums.length == 0) return 0;
+        int slow = 0, fast = 0;
+        int len = 0;
+        while(fast < nums.length) {
+            // intialization for the next step
+            fast++; len = 1;
+            // move fast pointer, stop when meet new number
+            while(fast<nums.length && nums[fast] == nums[fast-1]) { fast++; len++;}
+            // reconstruct array with slow pointer
+            for(int i=0; i<Math.min(len, k); ++i) { nums[slow++] = nums[fast-1];}
+
+        }
+        return slow;
+    }
+    */
+
+    // 更简明的方法
+    public int removeDuplicates(int[] nums, int k) {
+        int i= 0;
+        for(int n: nums) {
+            if(i<k || n != nums[i-k]) {
+                nums[i++] = n;
             }
         }
+        return i;
+
     }
 
-    public boolean search(int[] nums, int target) {
-        if(nums == null || nums.length == 0) return false;
-        return divideAndConq(nums, 0, nums.length-1, target);
+    public static void main(String[] args) {
+        LC_80_RemoveDuplicatesII inst = new LC_80_RemoveDuplicatesII();
+        int[] nums = new int[]{1,1,2,2,2,2,3,4,4,4,4};
+        System.out.println(inst.removeDuplicates(nums, 1));
+
     }
 }

@@ -15,6 +15,9 @@ import java.util.*;
 
  If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
 
+
+ 这题可以看成是 文本摘要的 简单算法
+
  * Created by xingyun on 15/8/1.
  */
 public class LC_76_MinWindowSubstr {
