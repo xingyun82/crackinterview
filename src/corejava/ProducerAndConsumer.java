@@ -30,7 +30,7 @@ class Producer extends Thread {
             Data.lock.lock();
             try {
                 // 这里一定要用while
-                // 因为生产者被唤醒后，这时又有别的生产者填满了buffer
+                // 因为生产者被唤醒后，这时又可能有别的生产者填满了buffer
                 while (Data.buffer.size() == 10) {
                     try {
                         System.out.println("P[" + id + "] buffer is full, start waiting...");
@@ -72,7 +72,7 @@ class Consumer extends Thread {
             Data.lock.lock();
             try {
                 // 这里一定要用while
-                // 因为消费者被唤醒后，这时又有别的消费者清空了buffer
+                // 因为消费者被唤醒后，这时又可能有别的消费者清空了buffer
                 while (Data.buffer.size() == 0) {
                     try {
                         System.out.println("C[" + id + "] buffer is null, start waiting...");

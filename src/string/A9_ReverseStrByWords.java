@@ -1,12 +1,11 @@
-import java.util.concurrent.atomic.AtomicInteger;
+package string;
 
-import java.util.*;
 /**
  * Created by xingyun on 15/9/7.
  */
 
 
-public class Test3 {
+public class A9_ReverseStrByWords {
 
     public void reverseWord(StringBuilder str, int s, int e) {
         while(s<e) {
@@ -33,7 +32,7 @@ public class Test3 {
     }
 
     public static void main(String[] args) {
-        Test3 inst = new Test3();
+        A9_ReverseStrByWords inst = new A9_ReverseStrByWords();
         System.out.println(inst.reverseStrByWords(" a b"));
 
     }

@@ -13,6 +13,8 @@ package google;
  */
 public class FishingGame {
 
+
+    /*
     int MAXNUM;
 
     public void doFishing(int[] nums, int start, int end) {
@@ -46,10 +48,32 @@ public class FishingGame {
         doFishing(nums, 0, nums.length-1);
         return MAXNUM;
     }
+    */
+
+    // 优化：用dp
+    public int maxA2(int[] A) {
+        int n = A.length;
+        int[][] S = new int[n][n];
+        for(int k=0; k<n; ++k) {
+            for(int i=0; i<n-k; ++i) {
+                if(k == 0) S[i][i+k] = A[i];
+                else if(k == 1) S[i][i+k] = Math.max(A[i], A[i+1]);
+                else {
+                    int j = i+k;
+                    // take A[i]
+                    int tmp1 = Math.max(A[i], A[j]>A[i+1]?S[i+1][j-1]:S[i+2][j]);
+                    // take A[j]
+                    int tmp2 = Math.max(A[j], A[i]>A[j-1]?S[i+1][j-1]:S[i][j-2]);
+                    S[i][j] = Math.max(tmp1, tmp2);
+                }
+            }
+        }
+        return S[0][n-1];
+    }
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1,9,8,5,2,6,4,8,3};
+        int[] nums = new int[]{1,8,2,3,4,9,5,6,7};
         FishingGame inst = new FishingGame();
-        System.out.println(inst.maxA(nums));
+        System.out.println(inst.maxA2(nums));
     }
 }
