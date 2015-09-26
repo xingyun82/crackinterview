@@ -25,6 +25,7 @@ package backtracking;
  */
 public class LC_10_RegularExpressionMatching {
 
+    /*
     public boolean matchStar(char c, String s, String p, int i, int j) {
         if (j == p.length()) {
             while(i<s.length()) {
@@ -54,4 +55,37 @@ public class LC_10_RegularExpressionMatching {
     public boolean isMatch(String s, String p) {
         return matchHere(s, p, 0, 0);
     }
+    */
+
+    // 简单递归算法
+    public boolean isMatch(String s, String p) {
+        if(s == null || s.length() == 0) return false;
+        if(p.length() == 0) return s.length() == 0;
+        if(p.length() == 1) {
+            if(s.charAt(0) != p.charAt(0) && p.charAt(0) != '.') return false;
+            return s.length() == 1;
+        }
+        if(p.charAt(1) == '*') {
+            int i=0;
+            while(i<s.length() && (s.charAt(i) == p.charAt(0) || p.charAt(0) == '.')) {
+                if(isMatch(s.substring(i+1), p.substring(2))) return true;
+                i++;
+            }
+            return isMatch(s.substring(i), p.substring(2));
+        } else {
+            if(s.charAt(0) != p.charAt(0) && p.charAt(0) != '.') return false;
+            return isMatch(s.substring(1), p.substring(1));
+        }
+    }
+
+    public static void main(String[] args) {
+        String s = "ab";
+        String p = "aa*b";
+        LC_10_RegularExpressionMatching inst = new LC_10_RegularExpressionMatching();
+        System.out.println(inst.isMatch(s, p));
+    }
+
+
+
+
 }

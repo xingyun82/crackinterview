@@ -1,6 +1,8 @@
-package math;
+package bitmagic;
 
 /**
+ *
+ * Given an array of integers, every element appears twice except for one. Find that single one.
  * Created by xingyun on 15/6/28.
  */
 public class LC_136_SingleNumber {

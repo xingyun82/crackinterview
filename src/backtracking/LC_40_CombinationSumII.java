@@ -4,7 +4,8 @@ import common.Utility;
 import java.util.*;
 /**
  *
- * Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+ * Given a collection of candidate numbers (C) and a target number (T),
+ * find all unique combinations in C where the candidate numbers sums to T.
 
  Each number in C may only be used once in the combination.
 
@@ -61,7 +62,8 @@ public class LC_40_CombinationSumII {
         return res;
     }
 
-    public void doCombinationSum(List<List<Integer>> res, int[] candidates, List<Integer> path, int last, int target) {
+    public void doCombinationSum(List<List<Integer>> res, int[] candidates, List<Integer> path, int i, int target) {
+        if(target < 0) return;
         if (target == 0) {
             if (path.size() > 0) {
                 List<Integer> tmpPath = new ArrayList<Integer>();
@@ -69,15 +71,13 @@ public class LC_40_CombinationSumII {
                 res.add(tmpPath);
             }
         }
-        for (int i=last+1; i<candidates.length; ++i) {
+        for (int j=i+1; j<candidates.length; ++j) {
             // ignore duplicated candidates
-            if(i>last+1 && candidates[i] == candidates[i-1]) continue;
+            if(j>i+1 && candidates[j] == candidates[j-1]) continue;
+            path.add(candidates[j]);
+            doCombinationSum(res, candidates, path, j, target - candidates[j]);
+            path.remove(path.size() - 1);
 
-            if(target >= candidates[i]) {
-                path.add(candidates[i]);
-                doCombinationSum(res, candidates, path, i, target - candidates[i]);
-                path.remove(path.size() - 1);
-            }
         }
     }
 

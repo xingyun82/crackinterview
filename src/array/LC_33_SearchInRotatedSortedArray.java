@@ -13,6 +13,7 @@ package array;
  */
 public class LC_33_SearchInRotatedSortedArray {
 
+    /*
     public int binarySearch(int[] A, int start, int end, int target) {
         if (start>end) return -1;
         //if (start == end) return target == A[start]?start:-1;
@@ -42,7 +43,7 @@ public class LC_33_SearchInRotatedSortedArray {
             if (A[mid] <= A[start]) {
                 int tgt1 = binarySearch(A, start, mid, target);
                 if (tgt1 != -1) return tgt1;
-                return search(A, mid+1, end, target);
+                return search(A, mid + 1, end, target);
             } else if (A[mid] >= A[end]) {
                 int tgt1 = binarySearch(A, mid, end, target);
                 if (tgt1 != -1) return tgt1;
@@ -69,5 +70,74 @@ public class LC_33_SearchInRotatedSortedArray {
     public int search(int[] A, int target) {
         if (A == null || A.length == 0) return -1;
         return search(A, 0, A.length-1, target);
+    }
+    */
+
+
+    /**
+     * 对于没有重复元素的数组，可以先找最小值的位置，然后用变形的二分查找
+     */
+
+    public int searchRotate(int[] A, int rot, int target) {
+        int n = A.length;
+        int l = rot, h = n-1+rot;
+        while(l<=h) {
+            int mid = (l+h)/2;
+            int realmid = mid%n;
+            if(A[realmid] == target) return realmid;
+            if(A[realmid] < target) l = mid+1;
+            else h = mid-1;
+        }
+        return -1;
+    }
+
+    public int searchPivot(int[] A) {
+        int n = A.length;
+        int l = 0, h = n-1;
+        while(l<h) {
+            int mid = (l+h)/2;
+            if(A[mid] < A[h]) h = mid;
+            else l = mid+1;
+        }
+        return l;
+    }
+
+    /**
+     * 对于有重复元素的数组，可以用下面的方法
+     */
+    public int search(int[] A, int target) {
+        int n = A.length;
+        int l = 0, h = n-1;
+        while(l<=h) {
+            int mid = l+(h-l)/2;
+            if(A[mid] == target) return mid;
+            if(A[mid] < A[h]) {
+                if(A[mid] < target && target <= A[h]) {
+                    l = mid+1;
+                } else {
+                    h = mid-1;
+                }
+            } else if(A[mid] > A[h]) {
+                if(A[l] <= target && target < A[mid]) {
+                    h = mid-1;
+                } else {
+                    l = mid+1;
+                }
+            } else {
+                h--;
+            }
+        }
+        return l;
+    }
+
+    public static void main(String[] args) {
+        LC_33_SearchInRotatedSortedArray inst = new LC_33_SearchInRotatedSortedArray();
+//        int[] A = {1,4, 5};
+//        int pivot = inst.searchPivot(A);
+//        System.out.println(pivot);
+//        System.out.println(inst.searchRotate(A, pivot, 1));
+        int[] A = {6,1,6,6,6,6,6};
+        System.out.println(inst.search(A, 6));
+
     }
 }

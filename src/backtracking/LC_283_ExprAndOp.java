@@ -109,8 +109,8 @@ public class LC_283_ExprAndOp {
     }
 
     public static void main(String[] args) {
-        String num = "3456237490";
-        int target = 9191;
+        String num = "123";
+        int target = 6;
         LC_283_ExprAndOp inst = new LC_283_ExprAndOp();
         List<String> res = inst.addOperators(num, target);
         for(String str:res) {

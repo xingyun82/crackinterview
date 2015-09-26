@@ -1,4 +1,4 @@
-package math;
+package bitmagic;
 
 /**
  * Created by xingyun on 15/9/9.

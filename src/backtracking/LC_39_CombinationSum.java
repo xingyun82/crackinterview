@@ -21,6 +21,8 @@ import java.util.*;
  */
 public class LC_39_CombinationSum {
 
+
+    /*
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         List<Integer> canList = new ArrayList<Integer>();
@@ -45,6 +47,46 @@ public class LC_39_CombinationSum {
                 doCombinationSum(res, A, path, i, target - i);
                 path.remove(path.size() - 1);
             }
+        }
+    }
+    */
+
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        List<Integer> path = new ArrayList<Integer>();
+        Arrays.sort(candidates);
+        doCombinationSum(res, candidates, path, 0, target);
+        return res;
+    }
+
+    public void doCombinationSum(List<List<Integer>> res, int[] candidates, List<Integer> path, int i, int target) {
+        if(target < 0) return;
+        if(target == 0) {
+            if(path.size() > 0) {
+                List<Integer> tmp = new ArrayList<Integer>(path);
+                res.add(tmp);
+            }
+            return;
+        }
+
+        for(int j=i; j<candidates.length; ++j) {
+            path.add(candidates[j]);
+            doCombinationSum(res, candidates, path, j, target - candidates[j]);
+            path.remove(path.size()-1);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] candidates = {2};
+        int target = 1;
+        LC_39_CombinationSum inst = new LC_39_CombinationSum();
+        List<List<Integer>> res = inst.combinationSum(candidates, target);
+
+        for(int i=0; i<res.size(); ++i) {
+            for(int j:res.get(i)) {
+                System.out.print(j+" ");
+            }
+            System.out.println();
         }
     }
 
