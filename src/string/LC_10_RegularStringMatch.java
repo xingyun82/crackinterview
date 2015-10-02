@@ -25,6 +25,7 @@ package string;
 
 public class LC_10_RegularStringMatch {
 
+
     public boolean matchStar(char c, String s, String p, int i, int j) {
         // p:a*, s:aaaa
         if (j == p.length()) {

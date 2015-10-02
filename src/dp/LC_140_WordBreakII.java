@@ -40,7 +40,7 @@ public class LC_140_WordBreakII {
             stopsMap.add(new ArrayList<Integer>());
         }
         for(int stop=s.length(); stop>0; stop--) {
-            if(stop != s.length() && stopsMap.get(stop).size() == 0) continue;
+            if(stop != s.length() && stopsMap.get(stop).size() == 0) continue; //这行代码很精妙！
             for(int start = stop-1; start>=0; start--) {
                 String str = s.substring(start, stop);
                 if(wordDict.contains(str)) {
@@ -110,5 +110,6 @@ public class LC_140_WordBreakII {
         for(String sentence:res) {
             System.out.println(sentence);
         }
+
     }
 }

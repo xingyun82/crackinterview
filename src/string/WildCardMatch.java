@@ -59,13 +59,15 @@ public class WildCardMatch {
     }
     */
 
+    // i: the ith character of S, 1<=i<=S.length()
+    // j: the jth character of P, 1<=j<=P.length()
     // M[i][j] =  M[i-1][j-1] && ( S[i-1] == P[j-1] || P[j-1] == '?' )  // if P[j-1] != '*'
     //         =  M[i][j-1] || M[i-1][j]  // if P[j-1] == '*'
 
     // M[0][0] = true;
     // M[i][0] = false;
     // M[0][j] = false  // if P[j-1] != '*'
-    //         = M[0][j-1]  // if P[j] == '*'
+    //         = M[0][j-1]  // if P[j-1] == '*'
 
     public boolean isMatch(String s, String p) {
         int m = s.length();

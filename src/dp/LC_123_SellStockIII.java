@@ -47,9 +47,9 @@ public class LC_123_SellStockIII {
     // S[i][1] = max(S[i-1][1], S[i-1][0]-prcies[i])
     // S[i][2] = max(S[i-1][2], S[i-1][1]+prices[i])
 
-    // 在i个位置，进行第k次买入的最大收益
+    // 到i个位置为止，已经进行k次买入的最大收益
     // S[i][2k+1] = max(S[i-1][2k+1], S[i-1][2k]  - prcies[i])
-    // 在i个位置，进行第k次卖出的最大收益
+    // 到i个位置为止，已经进行第k次卖出的最大收益
     // S[i][2k+2] = max(S[i-1][2k+2], S[i-1][2k+1]+ prices[i])
 
 

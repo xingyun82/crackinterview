@@ -51,6 +51,11 @@ public class FishingGame {
     */
 
     // 优化：用dp
+    // S[i][j] = Math.max(
+    //      Math.max(A[i], A[j]>A[i+1]?S[i+1][j-1]:S[i+2][j] // if take A[i]
+    //      Math.max(A[j], A[i]>A[j-1]?S[i+1][j-1]:S[i][j-2] // if take A[j]
+    // )
+
     public int maxA2(int[] A) {
         int n = A.length;
         int[][] S = new int[n][n];
