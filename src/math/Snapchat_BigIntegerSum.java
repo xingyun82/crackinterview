@@ -1,4 +1,4 @@
-package snapchat;
+package math;
 
 /**
  *
@@ -9,7 +9,7 @@ package snapchat;
  *
  * Created by xingyun on 9/30/15.
  */
-public class BigIntegerSum {
+public class Snapchat_BigIntegerSum {
 
     public boolean validInteger(String str) {
         if(str == null || str.length() == 0) return false;
@@ -128,7 +128,7 @@ public class BigIntegerSum {
     public static void main(String[] args) {
         String num1 = "10";
         String num2 = "-111";
-        BigIntegerSum inst = new BigIntegerSum();
+        Snapchat_BigIntegerSum inst = new Snapchat_BigIntegerSum();
         System.out.println(inst.sum(num1, num2));
     }
 }

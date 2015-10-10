@@ -1,9 +1,9 @@
-package linkedin;
+package dp;
 
 /**
  * Created by xingyun on 15/8/17.
  */
-public class PaintHouse {
+public class Linkedin_PaintHouse {
 
     // main idea: dp
     // suppose totalCost[i][k] is the kth house which paint with ith color
@@ -52,7 +52,7 @@ public class PaintHouse {
         cost[0] = new int[]{1,2,3,4,5};
         cost[1] = new int[]{2,3,4,5,6};
         cost[2] = new int[]{3,4,5,6,7};
-        PaintHouse inst = new PaintHouse();
+        Linkedin_PaintHouse inst = new Linkedin_PaintHouse();
         System.out.println(inst.minCost(n, m, cost));
     }
 }

@@ -22,4 +22,40 @@ package amazon;
  * Created by xingyun on 15/8/21.
  */
 public class RepeatedStr {
+
+    // idea: KMP algorithm
+    public int[] getPositions(char[] A) {
+        int n = A.length;
+        int[] P = new int[n];
+        int j=0;
+        for(int i=1; i<n; ++i) {
+            while(j>0&&A[i]!=A[j]) j=P[j-1];
+            if(A[i] == A[j]) j++;
+            P[i] = j;
+        }
+        return P;
+    }
+
+    public boolean isMultiple(String s) {
+        int[] P = getPositions(s.toCharArray());
+//        for(int i:P) {
+//            System.out.print(i + " ");
+//        }
+        int maxP = P[s.length()-1];
+        int delta = s.length() - maxP;
+        int i = s.length()-1;
+
+        if(i+1 == delta*2 && delta != 1) return true;
+        while(i>=0 && P[i] == i+1 - delta) {
+            i -= delta;
+            if(i+1 == delta*2 && delta != 1) return true;
+        }
+        return false;
+
+    }
+
+    public static void main(String[] args) {
+        RepeatedStr inst = new RepeatedStr();
+        System.out.println(inst.isMultiple("a"));
+    }
 }

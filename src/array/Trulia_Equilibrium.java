@@ -1,9 +1,9 @@
-package trulia;
+package array;
 
 /**
  * Created by xingyun on 15/7/23.
  */
-public class Equilibrium {
+public class Trulia_Equilibrium {
 
     public int equilibrium(int[] A) {
         if(A == null || A.length == 0) return -1;
@@ -25,7 +25,7 @@ public class Equilibrium {
     public static void main(String[] args) {
         int[] A = new int[]{3,-1,4, -1};
 
-        Equilibrium inst = new Equilibrium();
+        Trulia_Equilibrium inst = new Trulia_Equilibrium();
         System.out.println(inst.equilibrium(A));
         StringBuilder sb = new StringBuilder();
 

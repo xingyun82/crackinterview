@@ -6,6 +6,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * there are three ways to solve producer-consumer problem in java:
+ * 1. synchronized
+ * 2. lock/condition
+ * 3. semaphore
+ *
  * Created by xingyun on 15/9/5.
  */
 

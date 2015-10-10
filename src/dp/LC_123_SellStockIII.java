@@ -57,8 +57,8 @@ public class LC_123_SellStockIII {
         int[][] S = new int[2][2*k+1];
         S[0][0] = 0; //
         for(int i=0; i<k; ++i) {
-            S[0][2*i+1] = Integer.MIN_VALUE;  // 第
-            S[0][2*i+2] = 0;
+            S[0][2*i+1] = Integer.MIN_VALUE;  // 第i次买
+            S[0][2*i+2] = 0; // 第i次卖
         }
         int cur = 0, next = 1; // to reduce space complexity, otherwise we have to define S[prices.length][2*k+1]
         for(int i=0; i<prices.length; ++i) {

@@ -4,31 +4,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by xingyun on 15/6/22.
+ * Created by xingyun on 10/6/15.
  */
-
-public class LC_146_LRUCache {
-
+public class LRUCache2<K, V> {
 
     class DLinkedNode {
-        int key;
-        int value;
+        K key;
+        V value;
+        long timestamp;
+        long ttl = Long.MAX_VALUE;
         DLinkedNode pre;
         DLinkedNode post;
-        DLinkedNode(int key, int value) {
+        DLinkedNode(K key, V value) {
             this.key = key;
             this.value = value;
+            this.timestamp = System.currentTimeMillis();
+        }
+
+        DLinkedNode(K key, V value, long ttl) {
+            this.key = key;
+            this.value = value;
+            this.timestamp = System.currentTimeMillis();
+            this.ttl = ttl;
+        }
+
+        public boolean isExpired() {
+            if(ttl < System.currentTimeMillis() - timestamp) {
+                return true;
+            }
+            return false;
         }
     }
 
-    Map<Integer, DLinkedNode> cacheHash = new HashMap<Integer, DLinkedNode>();
-    DLinkedNode head = new DLinkedNode(0, 0);
-    DLinkedNode tail = new DLinkedNode(0, 0);
+    Map<K, DLinkedNode> cacheHash = new HashMap<K, DLinkedNode>();
+    DLinkedNode head = new DLinkedNode(null, null);
+    DLinkedNode tail = new DLinkedNode(null, null);
 
     int capacity = 0;
     int size = 0;
 
-    public LC_146_LRUCache(int capacity) {
+    public LRUCache2(int capacity) {
         this.capacity = capacity;
         head.post = tail;
         tail.pre = head;
@@ -52,19 +67,28 @@ public class LC_146_LRUCache {
         addNode(node);
     }
 
-    public int get(int key) {
+    public V get(K key) {
         DLinkedNode node = cacheHash.get(key);
         if(node != null) {
+            // check if node is expired
+            // if expired, then remove this node
+            if(node.isExpired()) {
+                cacheHash.remove(key);
+                removeNode(node);
+                size--;
+                return null;
+            }
+            // else, move to the head
             moveToHead(node);
             return node.value;
         }
-        return -1;
+        return null;
     }
 
-    public void set(int key, int value) {
+    public void set(K key, V value, long ttl) {
         DLinkedNode node = cacheHash.get(key);
         if(node == null) {
-            node = new DLinkedNode(key, value);
+            node = new DLinkedNode(key, value, ttl);
             cacheHash.put(key, node);
             addNode(node);
             size++;
@@ -77,14 +101,18 @@ public class LC_146_LRUCache {
             }
         } else {
             node.value = value;
+            node.ttl = ttl;
             moveToHead(node);
         }
     }
 
+    public void set(K key, V value) {
+        set(key, value, Long.MAX_VALUE);
+    }
 
     public static void main(String[] args) {
         //2,[get(2),set(2,6),get(1),set(1,5),set(1,2),get(1),get(2)
-        LC_146_LRUCache inst = new LC_146_LRUCache(2);
+        LRUCache2<Integer, Integer> inst = new LRUCache2<Integer, Integer>(2);
         System.out.println(inst.get(2));
         inst.set(2, 6);
         System.out.println(inst.get(1));
@@ -93,6 +121,16 @@ public class LC_146_LRUCache {
 
         System.out.println(inst.get(1));
         System.out.println(inst.get(2));
+
+        inst.set(1, 4, 1000);
+        System.out.println(inst.get(1));
+        try {
+            Thread.sleep(1001);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(inst.get(1));
+
 
     }
 

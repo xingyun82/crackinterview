@@ -27,34 +27,34 @@ public class LC_101_SymetricTree {
     public boolean isSymmetric(TreeNode root) {
         if(root == null) return true;
         //if(root.left != null)
-        Stack<TreeNode> leftStack = new Stack<TreeNode>();
-        Stack<TreeNode> rightStack = new Stack<TreeNode>();
+        Stack<TreeNode> stack1 = new Stack<TreeNode>();
+        Stack<TreeNode> stack2 = new Stack<TreeNode>();
         if(root.left == null) return root.right == null;
         else if(root.right == null) return false;
 
-        leftStack.push(root.left);
-        rightStack.push(root.right);
+        stack1.push(root.left);
+        stack2.push(root.right);
 
-        while(!leftStack.isEmpty() && !rightStack.isEmpty()) {
-            TreeNode leftNode = leftStack.pop();
-            TreeNode rightNode = rightStack.pop();
-            if(leftNode.val != rightNode.val) return false;
-            if(leftNode.left != null) {
-                if(rightNode.right == null) return false;
-                leftStack.push(leftNode.left);
-                rightStack.push(rightNode.right);
+        while(!stack1.isEmpty() && !stack2.isEmpty()) {
+            TreeNode node1 = stack1.pop();
+            TreeNode node2 = stack2.pop();
+            if(node1.val != node2.val) return false;
+            if(node1.left != null) {
+                if(node2.right == null) return false;
+                stack1.push(node1.left);
+                stack2.push(node2.right);
             } else {
-                if(rightNode.right != null) return false;
+                if(node2.right != null) return false;
             }
-            if(leftNode.right != null) {
-                if(rightNode.left == null) return false;
-                leftStack.push(leftNode.right);
-                rightStack.push(rightNode.left);
+            if(node1.right != null) {
+                if(node2.left == null) return false;
+                stack1.push(node1.right);
+                stack2.push(node2.left);
             } else {
-                if(rightNode.left != null) return false;
+                if(node2.left != null) return false;
             }
         }
-        if(!leftStack.isEmpty() || !rightStack.isEmpty()) return false;
+        if(!stack1.isEmpty() || !stack2.isEmpty()) return false;
         return true;
     }
 

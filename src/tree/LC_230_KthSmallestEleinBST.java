@@ -11,7 +11,8 @@ import java.util.*;
  You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
 
  Follow up:
- What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently? How would you optimize the kthSmallest routine?
+ What if the BST is modified (insert/delete operations) often and you need to find the kth smallest frequently?
+ How would you optimize the kthSmallest routine?
  * Created by xingyun on 15/8/20.
  */
 public class LC_230_KthSmallestEleinBST {

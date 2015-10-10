@@ -1,4 +1,4 @@
-package snapchat;
+package dp;
 
 import java.util.*;
 
@@ -10,7 +10,7 @@ import java.util.*;
  *
  * Created by xingyun on 9/29/15.
  */
-public class FileDiff {
+public class Snapchat_FileDiff {
 
     public final static String[] DIFF_TYPE = {"EQUAL", "a", "d", "c"};
     public final static int[] WEIGHTS = {0, 1, 1, 1};
@@ -19,7 +19,7 @@ public class FileDiff {
     private String[] file1;
     private String[] file2;
 
-    public FileDiff(String[] file1, String[] file2) {
+    public Snapchat_FileDiff(String[] file1, String[] file2) {
         this.file1 = file1;
         this.file2 = file2;
     }
@@ -186,7 +186,7 @@ public class FileDiff {
                 "hello",
                 "thanks"
         };
-        FileDiff inst = new FileDiff(file1, file2);
+        Snapchat_FileDiff inst = new Snapchat_FileDiff(file1, file2);
         List<LineDiffResult> res = inst.diff();
         inst.printDiff(res);
 

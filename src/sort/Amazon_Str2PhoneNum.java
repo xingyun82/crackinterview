@@ -1,4 +1,4 @@
-package amazon;
+package sort;
 
 import java.util.*;
 /**
@@ -31,22 +31,24 @@ import java.util.*;
 
  * Created by xingyun on 15/9/9.
  */
-class StrNum {
-    public String str;
-    public String num;
-    public StrNum(String str, String num) {this.str = str; this.num = num;}
-    public int compareTo(StrNum o) {
-        return num.compareTo(o.num);
+
+
+
+public class Amazon_Str2PhoneNum {
+
+    class StrNum {
+        public String str;
+        public String num;
+        public StrNum(String str, String num) {this.str = str; this.num = num;}
+        public int compareTo(StrNum o) {
+            return num.compareTo(o.num);
+        }
     }
-}
 
-
-
-public class Str2PhoneNum {
 
     public final static int[] chmap = {2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,7,8,8,8,9,9,9,9};
 
-    public static StrNum str2StrNum(String str) {
+    public  StrNum str2StrNum(String str) {
         StringBuilder sb = new StringBuilder();
         str = str.toLowerCase();
         for(int i=0; i<str.length(); ++i) {
@@ -56,7 +58,7 @@ public class Str2PhoneNum {
         return sn;
     }
 
-    public static void mergeSort(StrNum[] strnums, int i, int j) {
+    public  void mergeSort(StrNum[] strnums, int i, int j) {
         if(i==j) return;
         int mid = (i+j)>>1;
         mergeSort(strnums, i, mid);
@@ -85,16 +87,16 @@ public class Str2PhoneNum {
 
 
     public static void main(String[] args) {
-
+        Amazon_Str2PhoneNum inst = new Amazon_Str2PhoneNum();
         Scanner sc = new Scanner(System.in);
         int N= sc.nextInt();
         StrNum[] strnums = new StrNum[N];
         for(int i=0; i<N; ++i) {
             String str = sc.next();
-            StrNum sn = str2StrNum(str);
+            StrNum sn = inst.str2StrNum(str);
             strnums[i] = sn;
         }
-        mergeSort(strnums, 0, N-1);
+        inst.mergeSort(strnums, 0, N - 1);
         for(int i=0; i<N; ++i) {
             System.out.println(strnums[i].num + " " + strnums[i].str);
         }

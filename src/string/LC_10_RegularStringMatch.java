@@ -18,7 +18,9 @@ package string;
  isMatch("ab", ".*") → true
  isMatch("aab", "c*a*b") → true
 
- 后续可以考虑扩展到$和^的情况
+ TODO: 后续可以考虑+如何处理
+
+
  * Created by xingyun on 15/2/8.
  */
 
