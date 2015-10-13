@@ -2,6 +2,8 @@ package stack_queue_heap;
 
 import java.util.*;
 /**
+ * 下面这个算法mins的效率不高，可以参考 LC_155_MinStack
+ *
  * Created by xingyun on 10/8/15.
  */
 public class Amazon_StackMin {

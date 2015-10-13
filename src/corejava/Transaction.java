@@ -18,7 +18,7 @@ import java.util.*;
  set(3,c);
  get(3); --> 'c'
  set(4,c);
- count(4); --> 2
+ count(c); --> 2
  delete(2);
  get(2); --> null
  begin;
@@ -37,118 +37,155 @@ import java.util.*;
  * Created by xingyun on 10/9/15.
  */
 
-class Database {
 
-    public int read_from_db(int key) {
-        return 0;
+class Database<K, V> {
+
+    Map<K, V> data = new HashMap<K, V>();
+
+    public V get(K key) {
+        return data.get(key);
     }
 
-    public void write_to_db(int key, int val) {
-
+    public void set(K key, V val) {
+        data.put(key, val);
     }
 
-    public void delete_from_db(int key) {
-
+    public void delete(K key) {
+        data.remove(key);
     }
 
-    public int count_from_db(int val) {
-        return 0;
+    public List<K> getKeys(V val) {
+        List<K> keys = new ArrayList<K>();
+        for(Map.Entry<K, V> entry: data.entrySet()) {
+            if(entry.getValue().equals(val)) {
+                keys.add(entry.getKey());
+            }
+        }
+        return keys;
+    }
+
+    public int count(V val) {
+        int count = 0;
+        for(Map.Entry<K, V> entry: data.entrySet()) {
+            if(entry.getValue().equals(val)) count++;
+        }
+        return count;
     }
 
 }
-public class Transaction {
 
-    class BufferedNode {
-        int val;
+
+public class Transaction<K, V> {
+
+
+    class CacheNode<V> {
+        V val;
         int type; // 0 load, 1 write, 2 delete
-        public BufferedNode(int val, int type) { this.val = val; this.type = type; }
+        public CacheNode(V val, int type) { this.val = val; this.type = type; }
     }
 
-
-    Map<Integer, Integer> bufferedValueCount = new HashMap<Integer, Integer>();
-    Map<Integer, BufferedNode> bufferedStatus = new HashMap<Integer, BufferedNode>();
     boolean startTrans = false;
 
+    Map<K, CacheNode<V>> cache = new HashMap<K, CacheNode<V>>();
+    Database<K, V> db = new Database<K, V>();
 
-    Database db = new Database();
-
-
-    public void set(int key, int val) {
+    public void set(K key, V val) {
         if(startTrans) {
-            bufferedStatus.put(key, new BufferedNode(val, 1));
-            if(bufferedValueCount.containsKey(val)) {
-                bufferedValueCount.put(val, bufferedValueCount.get(val)+1);
+            if(!cache.containsKey(key)) {
+                cache.put(key, new CacheNode<V>(val, 1));
             } else {
-                bufferedValueCount.put(val, 1);
+                cache.get(key).val = val;
+                cache.get(key).type = 1;
             }
         } else {
-            db.write_to_db(key, val);
+            db.set(key, val);
         }
     }
 
-    public Integer get(int key) {
+    public V get(K key) {
         if(startTrans) {
-            if(bufferedStatus.containsKey(key)) {
-                BufferedNode node = bufferedStatus.get(key);
+            CacheNode<V> node = cache.get(key);
+            if(node == null) {
+                return db.get(key);
+            } else {
                 if(node.type == 2) return null;
                 return node.val;
             }
+        } else {
+            return db.get(key);
         }
-        return db.read_from_db(key);
     }
 
-    public int count(int val) {
-        int dbcount = db.count_from_db(val);
-        int cachecount = 0;
-        if(bufferedValueCount.containsKey(val)) {
-            cachecount = bufferedValueCount.get(val);
+    public int count(V val) {
+        int count = 0;
+        List<K> keys = db.getKeys(val);
+        for(K key:keys) {
+            if(!cache.containsKey(key)) {
+                count++;
+            }
         }
-        return dbcount + cachecount;
+
+        for(K key: cache.keySet()) {
+            if(cache.get(key).val != null && cache.get(key).val.equals(val)) {
+                count++;
+            }
+        }
+        return count;
     }
 
-    public void delete(int key) {
+    public void delete(K key) {
         if(startTrans) {
-            Integer val = null;
-            if(bufferedStatus.containsKey(key)) {
-                val = bufferedStatus.get(key).val;
-                bufferedStatus.get(key).type = 3;
-                bufferedValueCount.put(val, bufferedValueCount.get(val)-1);
+            if(!cache.containsKey(key)) {
+                cache.put(key, new CacheNode<V>(null, 2));
             } else {
-                val = db.read_from_db(key);
-                bufferedStatus.put(key, new BufferedNode(val, 3));
-                if(bufferedValueCount.containsKey(val)) {
-                    bufferedValueCount.put(val, bufferedValueCount.get(val)-1);
-                } else {
-                    bufferedValueCount.put(val, -1);
-                }
+                cache.get(key).type = 2;
             }
         } else {
-            db.delete_from_db(key);
+            db.delete(key);
         }
     }
 
-    public void begin_trans() throws Exception{
-        if(startTrans) throw new Exception("transaction already started");
+    public void begin_trans() {
         startTrans = true;
     }
 
     public void commit() {
-        for(int key:bufferedStatus.keySet()) {
-            BufferedNode node = bufferedStatus.get(key);
-            if(node.type == 2) {
-                db.write_to_db(key, node.val);
-            }
-            else if(node.type == 3) {
-                db.delete_from_db(key);
+        for(K key: cache.keySet()) {
+            if(cache.get(key).type == 1) {
+                db.set(key, cache.get(key).val);
+            } else if(cache.get(key).type == 2) {
+                db.delete(key);
             }
         }
-        bufferedStatus.clear();
-        bufferedValueCount.clear();
+        cache.clear();
     }
 
     public void rollback() {
-        bufferedStatus.clear();
-        bufferedValueCount.clear();
+        cache.clear();
+    }
+
+    public static void main(String[] args) {
+        Transaction<Integer, Character> inst = new Transaction<Integer, Character>();
+        inst.set(1, 'a');
+        inst.set(2, 'b');
+        inst.set(3, 'c');
+        System.out.println(inst.get(3));
+        inst.set(4, 'c');
+        System.out.println(inst.count('c'));
+        inst.delete(2);
+        System.out.println(inst.get(2));
+        inst.begin_trans();
+        inst.set(2, 'd');
+        System.out.println(inst.get(2));
+        inst.commit();
+        System.out.println(inst.get(2));
+        inst.begin_trans();
+        inst.set(5, 'e');
+        inst.set(6, 'e');
+        System.out.println(inst.count('e'));
+        inst.rollback();
+        System.out.println(inst.count('e'));
+
     }
 
 }

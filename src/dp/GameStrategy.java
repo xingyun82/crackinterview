@@ -1,4 +1,4 @@
-package geeksforgeeks;
+package dp;
 
 /**
  *
@@ -13,7 +13,7 @@ package geeksforgeeks;
  */
 public class GameStrategy {
 
-    /*
+    /* 方法一：递归
     public boolean S(int n) {
         if(n == 1) return false;
         if(n == 2) return true;
@@ -23,6 +23,7 @@ public class GameStrategy {
     }
     */
 
+    /* 方法二：动态规划
     public boolean S(int n) {
         boolean[] res = new boolean[n+1];
         res[0] = true;
@@ -31,12 +32,15 @@ public class GameStrategy {
         res[3] = true;
         res[4] = false;
         for(int i=5; i<=n; ++i) {
-            res[i] = !res[n-1] || !res[n-2] || !res[n-4];
+            res[i] = !res[i-1] || !res[i-2] || !res[i-4];
         }
         return res[n];
     }
-
-
+    */
+    // 方法三：总结规律
+    public boolean S(int n) {
+        return n%3 != 1;
+    }
 
     public static void main(String[] args) {
         GameStrategy inst = new GameStrategy();

@@ -5,6 +5,9 @@ import java.io.Serializable;
 /**
  * Created by xingyun on 15/9/6.
  */
+
+// Effective java 推荐 枚举 和 饿汉 方式
+// 枚举
 enum SingletonEnum {
 
     INSTANCE;
@@ -14,6 +17,21 @@ enum SingletonEnum {
     }
 }
 
+
+// 饿汉
+class SingletonInit {
+
+    private static SingletonInit inst = new SingletonInit();
+
+    private SingletonInit() {}
+
+    public static SingletonInit getInstance() {
+        return inst;
+    }
+}
+
+
+// 懒汉
 class SingletonLazy {
 
     private static SingletonLazy inst = null;
@@ -30,18 +48,7 @@ class SingletonLazy {
     }
 }
 
-
-class SingletonInit {
-
-    private static SingletonInit inst = new SingletonInit();
-
-    private SingletonInit() {}
-
-    public static SingletonInit getInstance() {
-        return inst;
-    }
-}
-
+// internal static class
 class SingletonInternalClass {
 
     private static class SingletonHodler {
@@ -55,6 +62,7 @@ class SingletonInternalClass {
     }
 }
 
+// double check
 class SingletonDoubleCheck implements Serializable {
 
     private static SingletonDoubleCheck inst = null;
