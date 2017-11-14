@@ -14,6 +14,8 @@ import java.util.*;
  A solution set is:
  (-1, 0, 1)
  (-1, -1, 2)
+
+ Hint: Two pointers
  * Created by xingyun on 15/8/19.
  */
 public class LC_15_3Sum {

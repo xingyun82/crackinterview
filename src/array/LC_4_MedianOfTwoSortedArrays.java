@@ -30,7 +30,7 @@ public class LC_4_MedianOfTwoSortedArrays {
      * @return
      */
     public double kthNumber(int A[], int B[], int al, int m, int bl, int n, int k) {
-        if(m > n) return kthNumber(B, A, bl, n, al, m, k);
+            if(m > n) return kthNumber(B, A, bl, n, al, m, k);
         if(m == 0) return B[bl+k-1];
         if(k == 1) return Math.min(A[al], B[bl]);
         int i = Math.min(m, k/2);

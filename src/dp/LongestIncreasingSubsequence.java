@@ -1,6 +1,9 @@
 package dp;
 
 /**
+ * The time complexity of this algorithm is O(N^2), not good
+ * Another good algorithm is set S[i] = min{A[j]} A[j] is the end of subsequence which len is i
+ * then the time complexity is O(NlogN)
  * Created by xingyun on 15/9/11.
  */
 public class LongestIncreasingSubsequence {

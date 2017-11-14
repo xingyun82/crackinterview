@@ -108,17 +108,17 @@ public class LC_33_SearchInRotatedSortedArray {
     public int search(int[] A, int target) {
         int n = A.length;
         int l = 0, h = n-1;
-        while(l<=h) {
+        while(l<h) {
             int mid = l+(h-l)/2;
             if(A[mid] == target) return mid;
             if(A[mid] < A[h]) {
-                if(A[mid] < target && target <= A[h]) {
+                if(A[mid] < target && target <= A[h]) {  //找出有序的部分，其他的归为else
                     l = mid+1;
                 } else {
                     h = mid-1;
                 }
             } else if(A[mid] > A[h]) {
-                if(A[l] <= target && target < A[mid]) {
+                if(A[l] <= target && target < A[mid]) { //找出有序的部分，其他的归为else
                     h = mid-1;
                 } else {
                     l = mid+1;
@@ -127,17 +127,20 @@ public class LC_33_SearchInRotatedSortedArray {
                 h--;
             }
         }
-        return l;
+        return A[l] == target ? l : -1;
     }
 
     public static void main(String[] args) {
         LC_33_SearchInRotatedSortedArray inst = new LC_33_SearchInRotatedSortedArray();
-//        int[] A = {1,4, 5};
+//        int[] A = {5,6,1,2,3,4};
+        int[] A = {3,4,5,6,1,2};
 //        int pivot = inst.searchPivot(A);
 //        System.out.println(pivot);
 //        System.out.println(inst.searchRotate(A, pivot, 1));
-        int[] A = {6,1,6,6,6,6,6};
-        System.out.println(inst.search(A, 6));
+//        int[] A = {6,1,6,6,6,6,6};
+        for (int a:A) {
+            System.out.println(inst.search(A, a));
+        }
 
     }
 }

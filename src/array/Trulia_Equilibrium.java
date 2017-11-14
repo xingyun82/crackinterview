@@ -1,6 +1,11 @@
 package array;
 
 /**
+ * Equilibrium:
+    a1, a2, a3,  ...ai-1,  ai, ai+1, .. an
+    suppose tmpsum = sum(a1,.. ai-1),
+    if ai is equilibrium, then tmpsum = sum(ai+1, ... an)
+
  * Created by xingyun on 15/7/23.
  */
 public class Trulia_Equilibrium {

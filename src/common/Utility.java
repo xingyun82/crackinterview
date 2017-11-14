@@ -20,5 +20,4 @@ public class Utility<E> {
         System.out.println();
     }
 
-
 }

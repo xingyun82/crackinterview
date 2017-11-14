@@ -26,6 +26,8 @@ package tree;
 
 import common.*;
 
+import java.util.Stack;
+
 public class LC_156_BinaryTreeUpsideDown {
 
 
@@ -46,6 +48,40 @@ public class LC_156_BinaryTreeUpsideDown {
         return nRight;
     }
 
+    /**
+     * Solution with stack:
+     * pros: don't break the original tree.
+     * cons: need more space
+     */
+    public TreeNode UpsideDownBinaryTree2(TreeNode root) {
+        if (root == null) return null;
+        Stack<Integer> stack = new Stack();
+        // push all nodes in stack, if the right is empty, then put null
+        TreeNode node = root;
+        while (node != null) {
+            stack.push(node.val);
+            if (node.right == null) {
+                stack.push(null);
+            } else {
+                stack.push(node.right.val);
+            }
+            node = node.left;
+        }
+        TreeNode dummyNode = new TreeNode(-1);
+        TreeNode tmpNode = dummyNode;
+        while(!stack.isEmpty()) {
+            Integer val = stack.pop();
+            if (val == null) {
+                tmpNode.left = null;
+            } else {
+                tmpNode.left = new TreeNode(val);
+            }
+            tmpNode.right = new TreeNode(stack.pop());
+            tmpNode = tmpNode.right;
+        }
+        return dummyNode.right;
+    }
+
     public static void main(String[] args) {
         LC_156_BinaryTreeUpsideDown inst = new LC_156_BinaryTreeUpsideDown();
         TreeNode root = new TreeNode(1);
@@ -58,7 +94,8 @@ public class LC_156_BinaryTreeUpsideDown {
         node2.left = node4;
         node2.right = node5;
 
-        TreeNode nRoot = inst.UpsideDownBinaryTree(root);
+//        TreeNode nRoot = inst.UpsideDownBinaryTree(root);
+        TreeNode nRoot = inst.UpsideDownBinaryTree2(root);
         nRoot.printTree();
     }
 }

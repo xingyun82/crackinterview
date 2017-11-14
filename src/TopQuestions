@@ -1,0 +1,105 @@
+238 Product of Array Except Self 47.0% Medium 
+Note: we can't say res[i] = product of all nums/nums[i], because when nums[i] == 0, this will cause divide by 0 error!
+time: O(n)
+
+237 Delete Node in a Linked List 45.4% Easy 
+node.val = node.next.val;
+node.next = node.next.next;
+time: O(1)
+
+240 Search a 2D Matrix II 37.9% Medium 
+Search from the top right.
+time: O(m+n)
+
+206 Reverse Linked List 43.4% Easy 
+a->b->c->d
+ListNode pre = null;
+ListNode next = null;
+ListNode node = head;
+while(node!= null) {
+    next = node.next;
+    node.next = pre;
+    pre = node;
+    node = next;
+}
+time: O(n)
+
+42 Trapping Rain Water 35.3% Hard 
+Note: two pointers
+time: O(n)
+
+1 Two Sum 29.8% Easy 
+
+48 Rotate Image 37.1% Medium
+ 
+215 Kth Largest Element in an Array 37.4% Medium 
+NOTE: mini-heap, selection-sort
+
+102 Binary Tree Level Order Traversal 36.9% Easy 
+NOTE: queue
+
+149 Max Points on a Line 15.5% Hard 
+NOTE: use a hashmap to store all slope->count
+
+191 Number of 1 Bits 38.5% Easy 
+while(a != 0) {
+  a = a&(a-1);
+  count++;
+}
+return count;
+
+
+4 Median of Two Sorted Arrays 20.8% Hard 
+NOTE: divide-and-conqueror
+
+70 Climbing Stairs 38.6% Easy 
+NOTE:
+1. dp (O(n))
+2. fibonacci matrix (O(logn))
+https://leetcode.com/problems/climbing-stairs/solution/
+
+36 Valid Sudoku 33.8% Easy 
+
+221 Maximal Square 27.0% Medium 
+NOTE: dp
+
+165 Compare Version Numbers 19.2% Easy 
+NOTE: pay attention to the ".", string.split("\\.");
+
+207 Course Schedule 30.4% Medium 
+NOTE: topology sorting.
+
+104 Maximum Depth of Binary Tree 50.8% Easy 
+NOTE: iterative method, using level order traversal.
+
+257 Binary Tree Paths 34.7% Easy 
+NOTE: DFS
+
+69 Sqrt(x) 26.9% Medium 
+NOTE: binary search
+
+21 Merge Two Sorted Lists 37.9% Easy 
+NOTE: dummy
+
+7 Reverse Integer 23.7% Easy 
+
+190 Reverse Bits 29.5% Easy 
+NOTE: bit op.
+
+28 Implement strStr() 26.9% Easy 
+NOTE: KMP.
+
+151 Reverse Words in a String 15.7% Medium 
+NOTE: none
+
+118 Pascal's Triangle 36.6% Easy 
+
+
+284 Peeking Iterator 35.1% Medium 
+NOTE: cache next
+
+236 Lowest Common Ancestor of a Binary Tree 29.3% Medium 
+NOTE: recursive.
+
+383 Ransom Note 46.1% Easy
+NOTE: char freq

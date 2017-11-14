@@ -34,70 +34,94 @@ public class LC_140_WordBreakII {
     }
     */
 
-    public List<List<Integer>> getStopsMap(String s, Set<String> wordDict) {
-        List<List<Integer>> stopsMap = new ArrayList<List<Integer>>();
-        for(int i=0;i<s.length();++i) {
-            stopsMap.add(new ArrayList<Integer>());
-        }
-        for(int stop=s.length(); stop>0; stop--) {
-            if(stop != s.length() && stopsMap.get(stop).size() == 0) continue; //这行代码很精妙！
-            for(int start = stop-1; start>=0; start--) {
-                String str = s.substring(start, stop);
-                if(wordDict.contains(str)) {
-                    stopsMap.get(start).add(stop);
-                }
-            }
-        }
-        return stopsMap;
-    }
-
-    public void doMatch(List<List<Integer>> stopsMap, String s, int start, List<String> sentence, List<List<String>> sentences) {
-        List<Integer> stops = stopsMap.get(start);
-        for(int i: stops) {
-            sentence.add(s.substring(start, i));
-            if(i == s.length()) {
-                List<String> newSent = new ArrayList<String>(sentence);
-                sentences.add(newSent);
-                //return;
-            } else {
-                doMatch(stopsMap, s, i, sentence, sentences);
-            }
-            sentence.remove(sentence.size()-1);
-        }
-    }
+//    public List<List<Integer>> getStopsMap(String s, Set<String> wordDict) {
+//        List<List<Integer>> stopsMap = new ArrayList<List<Integer>>();
+//        for(int i=0;i<s.length();++i) {
+//            stopsMap.add(new ArrayList<Integer>());
+//        }
+//        for(int stop=s.length(); stop>0; stop--) {
+//            if(stop != s.length() && stopsMap.get(stop).size() == 0) continue; //这行代码很精妙！
+//            for(int start = stop-1; start>=0; start--) {
+//                String str = s.substring(start, stop);
+//                if(wordDict.contains(str)) {
+//                    stopsMap.get(start).add(stop);
+//                }
+//            }
+//        }
+//        return stopsMap;
+//    }
+//
+//    public void doMatch(List<List<Integer>> stopsMap, String s, int start, List<String> sentence, List<List<String>> sentences) {
+//        List<Integer> stops = stopsMap.get(start);
+//        for(int i: stops) {
+//            sentence.add(s.substring(start, i));
+//            if(i == s.length()) {
+//                List<String> newSent = new ArrayList<String>(sentence);
+//                sentences.add(newSent);
+//                //return;
+//            } else {
+//                doMatch(stopsMap, s, i, sentence, sentences);
+//            }
+//            sentence.remove(sentence.size()-1);
+//        }
+//    }
+//
+//    public List<String> wordBreak(String s, Set<String> wordDict) {
+//
+//        List<String> res = new ArrayList<String>();
+//
+//        // build trie for word dict
+//        /**
+//        Trie trie = new Trie();
+//        for(String word: wordDict) {
+//            trie.addWord(word);
+//        }
+//         */
+//        List<List<Integer>> stopsMap = getStopsMap(s, wordDict);
+//
+//        //
+//        List<List<String>> sentences = new ArrayList<List<String>>();
+//        List<String> sentence = new ArrayList<String>();
+//        //doMatch(trie, s, sentence, sentences);
+//        doMatch(stopsMap, s, 0, sentence, sentences);
+//
+//
+//        for(List<String> sen:sentences) {
+//            StringBuffer sb = new StringBuffer();
+//            for(String str:sen) {
+//                sb.append(str).append(" ");
+//            }
+//            sb.deleteCharAt(sb.length()-1);
+//            res.add(sb.toString());
+//        }
+//
+//        return res;
+//    }
 
     public List<String> wordBreak(String s, Set<String> wordDict) {
-
-        List<String> res = new ArrayList<String>();
-
-        // build trie for word dict
-        /**
-        Trie trie = new Trie();
-        for(String word: wordDict) {
-            trie.addWord(word);
-        }
-         */
-        List<List<Integer>> stopsMap = getStopsMap(s, wordDict);
-
-        //
-        List<List<String>> sentences = new ArrayList<List<String>>();
-        List<String> sentence = new ArrayList<String>();
-        //doMatch(trie, s, sentence, sentences);
-        doMatch(stopsMap, s, 0, sentence, sentences);
-
-
-        for(List<String> sen:sentences) {
-            StringBuffer sb = new StringBuffer();
-            for(String str:sen) {
-                sb.append(str).append(" ");
-            }
-            sb.deleteCharAt(sb.length()-1);
-            res.add(sb.toString());
-        }
-
-        return res;
+        return DFS(s, wordDict, new HashMap<String, LinkedList<String>>());
     }
 
+    // DFS function returns an array including all substrings derived from s.
+    List<String> DFS(String s, Set<String> wordDict, HashMap<String, LinkedList<String>>map) {
+        if (map.containsKey(s))
+            return map.get(s);
+
+        LinkedList<String>res = new LinkedList<String>();
+        if (s.length() == 0) {
+            res.add("");
+            return res;
+        }
+        for (String word : wordDict) {
+            if (s.startsWith(word)) {
+                List<String>sublist = DFS(s.substring(word.length()), wordDict, map);
+                for (String sub : sublist)
+                    res.add(word + (sub.isEmpty() ? "" : " ") + sub);
+            }
+        }
+        map.put(s, res);
+        return res;
+    }
 
     public static void main(String[] args) {
         LC_140_WordBreakII inst = new LC_140_WordBreakII();

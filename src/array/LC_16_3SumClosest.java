@@ -9,6 +9,7 @@ import java.util.*;
 
  The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 
+ Hint: Two pointers
  * Created by xingyun on 15/8/19.
  */
 public class LC_16_3SumClosest {

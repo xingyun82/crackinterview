@@ -51,22 +51,20 @@ public class LC_153_FindMinOfRoatedArray {
     */
 
     public int findMin(int[] nums) {
-        int res = -1;
         int low = 0, high = nums.length-1;
-        int mid = -1;
-        while(low <= high) {
-            if(nums[low] <= nums[high]) return nums[low];
+        int mid;
+        while(low < high) {
+            if(nums[low] < nums[high]) return nums[low];
             mid = (low+high)>>>1;
-            if(mid-1 >= 0 && mid+1 < nums.length
-            && nums[mid] < nums[mid-1] && nums[mid] < nums[mid+1]) return nums[mid];
             if(nums[mid] < nums[high]) {
-                high = mid - 1;
-            } else {
+                high = mid;
+            } else if (nums[mid] > nums[high]){
                 low = mid + 1;
+            } else {
+                high--;
             }
         }
-
-        return res;
+        return nums[low];
     }
 
     public static void main(String[] args) {

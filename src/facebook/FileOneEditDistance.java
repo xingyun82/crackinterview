@@ -1,6 +1,7 @@
 package facebook;
 
 /**
+ * 判断两个数字流是否最多只有一个不同
  * Created by xingyun on 15/7/13.
  */
 class IntFileIterator {
@@ -28,8 +29,7 @@ public class FileOneEditDistance {
 
     public boolean isDistanceZeroOrOne(IntFileIterator a,
                                        IntFileIterator b) {
-        boolean ins_a = false, ins_b = false, replace = false, diff =
-                false;
+        boolean ins_a = false, ins_b = false, replace = false, diff = false;
         int pre_a = 0;
         int pre_b = 0;
         while (a.hasNext() && b.hasNext()) {

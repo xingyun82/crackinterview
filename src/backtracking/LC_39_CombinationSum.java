@@ -60,7 +60,9 @@ public class LC_39_CombinationSum {
     }
 
     public void doCombinationSum(List<List<Integer>> res, int[] candidates, List<Integer> path, int i, int target) {
+        // check if should terminated
         if(target < 0) return;
+        // check if we find a path
         if(target == 0) {
             if(path.size() > 0) {
                 List<Integer> tmp = new ArrayList<Integer>(path);
@@ -68,7 +70,7 @@ public class LC_39_CombinationSum {
             }
             return;
         }
-
+        // do back tracking
         for(int j=i; j<candidates.length; ++j) {
             path.add(candidates[j]);
             doCombinationSum(res, candidates, path, j, target - candidates[j]);

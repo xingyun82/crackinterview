@@ -101,6 +101,6 @@ public class LC_224_Calculator {
 
     public static void main(String[] args) {
         LC_224_Calculator inst = new LC_224_Calculator();
-        System.out.println(inst.calculate("(1+(2+3))+4"));
+        System.out.println(inst.calculate("(1-(2+3))-4"));
     }
 }

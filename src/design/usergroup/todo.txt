@@ -1,0 +1,14 @@
+implement a function like user group:
+User groups - If I made a certain post visible to a user group, how to store the post?
+how to push the post to the chosen group.
+If there are new friends who aren't assigned to any group just yet,
+how to treat them as if they were in the same 'unassigned' group?
+
+Feed ranking:
+Given the newest 100 entries of a person's facebook newsfeed.
+How would you rank the entries. The (for the user) most important ones should be ranked first.
+Which features would you use and how do you train/improve your model (machine learning)?
+
+Design Messenger backend:
+
+

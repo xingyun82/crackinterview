@@ -225,7 +225,7 @@ public class LC_243_ShortestWordDist {
         List<String> words = new ArrayList<String>();
         words.add("D");
         words.add("D");
-        //words.add("F");
+        words.add("F");
         System.out.println(inst.getShortestDist2(words));
     }
 }

@@ -3,8 +3,8 @@ package array;
 import java.util.Arrays;
 /**
  * 判断一个数组是否可以找出三个数组成一个三角形
- */
-/**
+ *
+ * Hint: math problem
  * Created by xingyun on 15/8/17.
  */
 public class HasTriangle {

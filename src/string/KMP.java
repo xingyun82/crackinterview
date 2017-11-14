@@ -37,7 +37,7 @@ public class KMP {
 
     public static void main(String[] args) {
         KMP inst = new KMP();
-        char[] B = "ABC".toCharArray();
+        char[] B = "ABCD".toCharArray();
         char[] A = "BBC ABCDAB ABCDABCDABDE".toCharArray();
         int[] P = inst.getPrefixArray(B);
         for(int i:P) {

@@ -8,7 +8,7 @@ public class LCS {
     //最长公共子序列
     // s[0, j] = 0
     // s[i, 0] = 0
-    // s[i, j] = s[i-1, j-1] + 1 (if a[i] = b[j])
+    // s[i, j] = s[i-1, j-1] + 1 (if a[i] == b[j])
     //         = max { s[i-1, j], s[i, j-1] }  if a[i]!=b[j]
 
     public int LongestCommonSubseq(int[] A, int[] B) {
@@ -37,8 +37,8 @@ public class LCS {
     //最长连续公共子序列
     // s[0, j] = 0
     // s[i, 0] = 0
-    // s[i, j] = s[i-1, j-1] + 1 (if a[i] = b[j])
-    //         = 0 if a[i] = b[j]
+    // s[i, j] = s[i-1, j-1] + 1 (if a[i] == b[j])
+    //         = 0 if a[i] != b[j]
 
     public int LongestContinousCommonSubSeq(int[] A, int[] B) {
         int res = 0;

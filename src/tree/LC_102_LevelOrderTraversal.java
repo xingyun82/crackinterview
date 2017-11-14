@@ -30,33 +30,55 @@ import java.util.Queue;
  */
 public class LC_102_LevelOrderTraversal {
 
+//    public List<List<Integer>> levelOrder(TreeNode root) {
+//
+//        List<List<Integer>> res = new ArrayList<List<Integer>>();
+//        if(root == null) return res;
+//
+//        Queue<TreeNode> queue1 = new LinkedList<TreeNode>();
+//        Queue<TreeNode> queue2 = new LinkedList<TreeNode>();
+//        queue1.offer(root);
+//
+//        while(!queue1.isEmpty()) {
+//            List<Integer> list = new ArrayList<Integer>();
+//            while(!queue1.isEmpty()) {
+//                TreeNode node = queue1.poll();
+//                list.add(node.val);
+//                if(node.left != null) {
+//                    queue2.offer(node.left);
+//                }
+//                if(node.right != null) {
+//                    queue2.offer(node.right);
+//                }
+//            }
+//            res.add(list);
+//            Queue<TreeNode> tmp = queue1;
+//            queue1 = queue2;
+//            queue2 = tmp;
+//        }
+//
+//        return res;
+//    }
+
     public List<List<Integer>> levelOrder(TreeNode root) {
 
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         if(root == null) return res;
 
-        Queue<TreeNode> queue1 = new LinkedList<TreeNode>();
-        Queue<TreeNode> queue2 = new LinkedList<TreeNode>();
-        queue1.offer(root);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
 
-        while(!queue1.isEmpty()) {
-            List<Integer> list = new ArrayList<Integer>();
-            while(!queue1.isEmpty()) {
-                TreeNode node = queue1.poll();
-                list.add(node.val);
-                if(node.left != null) {
-                    queue2.offer(node.left);
-                }
-                if(node.right != null) {
-                    queue2.offer(node.right);
-                }
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            List<Integer> subList = new ArrayList<>();
+            for (int i = 0; i < levelSize; ++i) {
+                TreeNode node = queue.poll();
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+                subList.add(node.val);
             }
-            res.add(list);
-            Queue<TreeNode> tmp = queue1;
-            queue1 = queue2;
-            queue2 = tmp;
+            res.add(subList);
         }
-
         return res;
     }
 

@@ -16,6 +16,22 @@ import java.util.Set;
  Return 4.
 
  * Created by xingyun on 15/8/21.
+ *
+ */
+
+/**
+ *
+ if (matrix[i][j] == '1')
+    l[i][j] =  min(l[i-1][j-1], l[i-1][j], l[i][j-1]) + 1
+
+ For example: consider matrix[3][5], l[3][4] = 2, l[2][5] = 1, l[2][4] = 2, so l[3][5] = 1+1 = 2;
+
+ 1 0 1 1 0
+ 1 0 1 1 1
+ 1 1 1 1 (1)
+ 1 0 0 1 0
+
+
  */
 public class LC_221_MaximalSquare {
 
